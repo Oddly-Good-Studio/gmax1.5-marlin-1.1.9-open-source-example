@@ -1,19 +1,18 @@
 # Makefile
 
-LIBRARIES = WiFiNINA IRremote ArduinoJson ArduinoHttpClient Arduino_LSM6DS3 DS3231
+LIBRARIES = U8glib
 BOARD = arduino:avr:mega
-PORT = /dev/$$(ls -al /dev/ | grep cu.usbmodem | awk '{ print $$9 }')
+PORT := $(shell arduino-cli board list | grep $(BOARD) | awk '{ print $$1 }')
 
-# .PHONY: all
+.PHONY: all
 
-# all: install compile upload monitor
+all: install compile upload monitor
 
 # init: install
-# 	brew bundle
-# 	arduino-cli core install arduino:samd
+	# arduino-cli core install arduino:avr:mega
 
-# install:
-# 	arduino-cli lib install $(LIBRARIES)
+install:
+	arduino-cli lib install $(LIBRARIES)
 
 compile:
 		arduino-cli compile --fqbn $(BOARD)
